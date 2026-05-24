@@ -1,0 +1,25 @@
+name: Release Foundry Module
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build module zip
+        run: zip -r foundry-local-bridge.zip module.json module.js README.md LICENSE
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: foundry-local-bridge.zip

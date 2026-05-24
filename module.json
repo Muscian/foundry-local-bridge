@@ -1,0 +1,22 @@
+{
+  "id": "foundry-local-bridge",
+  "title": "Foundry Local Bridge",
+  "description": "A small Foundry VTT companion module that connects a GM browser session to a local MCP/automation bridge and exposes safe token and prototype-token commands.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Foundry Local Bridge contributors"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "13",
+    "maximum": "13"
+  },
+  "esmodules": [
+    "module.js"
+  ],
+  "url": "https://github.com/Muscian/foundry-local-bridge",
+  "manifest": "https://raw.githubusercontent.com/Muscian/foundry-local-bridge/main/module.json",
+  "download": "https://github.com/Muscian/foundry-local-bridge/releases/latest/download/foundry-local-bridge.zip"
+}
