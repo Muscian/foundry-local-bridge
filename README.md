@@ -29,7 +29,7 @@ AI client / local tool
 
 ## Installation via Manifest URL
 
-After this repository is published, install it in Foundry using this manifest URL:
+Install it in Foundry using this manifest URL:
 
 ```text
 https://raw.githubusercontent.com/Muscian/foundry-local-bridge/main/module.json
@@ -53,7 +53,7 @@ Once installed by manifest URL, updating is the normal Foundry module flow:
 
 1. Push a new version to GitHub.
 2. Update `version` in `module.json`.
-3. Publish a matching release zip named `foundry-local-bridge.zip`.
+3. Publish a matching GitHub release zip named `foundry-local-bridge.zip`.
 4. In FoundryServer, use the module update flow.
 
 ## Local Development
