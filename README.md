@@ -6,6 +6,15 @@ It connects your **GM browser session** to a local WebSocket server running on y
 
 This module is useful when your Foundry world is hosted remotely, but you still open it locally in a browser as GM. The module runs inside that browser session and can safely execute narrow Foundry operations that remote MCP services or generic bridge modules may not expose.
 
+## Do I Need This and Foundry API Bridge?
+
+For the full [`foundry-local-mcp`](https://github.com/Muscian/foundry-local-mcp) setup, yes, you normally use two Foundry modules:
+
+- **A Foundry API Bridge-compatible module** connected to `ws://127.0.0.1:3001/ws` for general automation: actors, items, scenes, tokens, combat, journals, dice, and other broad world operations.
+- **Foundry Local Bridge** connected to `ws://127.0.0.1:3003/ws` for token/prototype-token operations that generic bridge modules may not expose: token texture, token dimensions, and actor prototype token setup.
+
+This module is intentionally a companion, not a complete replacement for a broad Foundry API bridge.
+
 ## What It Does
 
 The module currently exposes these commands to a local WebSocket server:
