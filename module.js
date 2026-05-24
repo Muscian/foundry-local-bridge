@@ -76,6 +76,60 @@ function tokenResult(token) {
   };
 }
 
+function sanitizeFilename(filename) {
+  const safe = String(filename || "token.png")
+    .replace(/[<>:"/\\|?*\x00-\x1F]/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return safe || "token.png";
+}
+
+async function ensureDataDirectory(path) {
+  try {
+    await FilePicker.createDirectory("data", path);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (!message.toLowerCase().includes("already exists")) {
+      throw error;
+    }
+  }
+}
+
+function dataUrlToFile(dataUrl, filename) {
+  const match = String(dataUrl).match(/^data:(image\/(?:png|webp|jpeg));base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) {
+    throw new Error("Expected a PNG, WebP, or JPEG data URL");
+  }
+
+  const [, mimeType, base64] = match;
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+
+  return new File([bytes], sanitizeFilename(filename), { type: mimeType });
+}
+
+async function uploadTokenImage(params) {
+  const savePath = String(params.savePath || `worlds/${game.world.id}/tokens`);
+  const filename = sanitizeFilename(params.filename || "token.png");
+  const file = dataUrlToFile(params.dataUrl, filename);
+
+  await ensureDataDirectory(savePath);
+  const upload = await FilePicker.upload("data", savePath, file, {}, { notify: false });
+
+  return {
+    path: upload.path,
+    savePath,
+    filename,
+    type: file.type,
+    size: file.size
+  };
+}
+
 async function setActorPrototypeToken(params) {
   const actor = game.actors.get(params.actorId);
   if (!actor) throw new Error(`Actor not found: ${params.actorId}`);
@@ -96,6 +150,10 @@ async function setActorPrototypeToken(params) {
 
   if (params.disposition !== undefined) {
     updateData["prototypeToken.disposition"] = Number(params.disposition);
+  }
+
+  if (params.updateActorImg) {
+    updateData.img = textureSrc;
   }
 
   const updated = await actor.update(updateData);
@@ -179,6 +237,8 @@ async function handleCommand(command) {
             }
           : null
       };
+    case "upload-token-image":
+      return await uploadTokenImage(command.params ?? {});
     case "set-actor-prototype-token":
       return await setActorPrototypeToken(command.params ?? {});
     case "update-token-from-actor":

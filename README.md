@@ -20,11 +20,12 @@ This module is intentionally a companion, not a complete replacement for a broad
 The module currently exposes these commands to a local WebSocket server:
 
 - `companion-status`
+- `upload-token-image`
 - `set-actor-prototype-token`
 - `update-token-from-actor`
 - `create-token-from-actor`
 
-These commands are intentionally narrow. They focus on token/prototype-token operations that are often needed by automation tools and are not always available through generic Foundry API bridge modules.
+These commands are intentionally narrow. They focus on token/prototype-token operations that are often needed by automation tools and are not always available through generic Foundry API bridge modules. `upload-token-image` accepts a PNG, WebP, or JPEG data URL from the local bridge server and writes it through Foundry's `FilePicker.upload`, so hosted worlds can receive token art generated on the local machine. `set-actor-prototype-token` can also update the actor sheet image when the local server passes `updateActorImg`.
 
 ## Architecture
 
