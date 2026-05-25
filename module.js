@@ -156,18 +156,18 @@ async function setActorPrototypeToken(params) {
     updateData.img = textureSrc;
   }
 
-  const updated = await actor.update(updateData);
+  await actor.update(updateData);
 
   return {
-    id: updated.id,
-    name: updated.name,
-    img: updated.img,
+    id: actor.id,
+    name: actor.name,
+    img: actor.img,
     prototypeToken: {
-      width: updated.prototypeToken.width,
-      height: updated.prototypeToken.height,
-      textureSrc: updated.prototypeToken.texture.src,
-      actorLink: updated.prototypeToken.actorLink,
-      disposition: updated.prototypeToken.disposition
+      width: actor.prototypeToken.width,
+      height: actor.prototypeToken.height,
+      textureSrc: actor.prototypeToken.texture.src,
+      actorLink: actor.prototypeToken.actorLink,
+      disposition: actor.prototypeToken.disposition
     }
   };
 }
@@ -189,8 +189,8 @@ async function updateTokenFromActor(params) {
     updateData["texture.scaleY"] = Number(params.scale);
   }
 
-  const updated = await token.update(updateData);
-  return tokenResult(updated);
+  await token.update(updateData);
+  return tokenResult(token);
 }
 
 async function createTokenFromActor(params) {

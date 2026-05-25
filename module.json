@@ -2,7 +2,7 @@
   "id": "foundry-local-bridge",
   "title": "Foundry Local Bridge",
   "description": "A small Foundry VTT companion module that connects a GM browser session to a local MCP/automation bridge and exposes safe token and prototype-token commands.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "authors": [
     {
       "name": "Foundry Local Bridge contributors"
