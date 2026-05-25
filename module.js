@@ -253,6 +253,9 @@ async function handleCommand(command) {
 function connect() {
   if (!game.user?.isGM) return;
   if (!game.settings.get(MODULE_ID, "enabled")) return;
+  if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+    return;
+  }
 
   const wsUrl = game.settings.get(MODULE_ID, "wsUrl");
   manualClose = false;
